@@ -16,6 +16,8 @@ private:
     std::string prompt;
     std::string input;
 
+    void updatePrompt();
+    void resetPrompt();
 
 public:
     Shell();
