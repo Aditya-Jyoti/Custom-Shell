@@ -24,6 +24,5 @@ namespace Commands
             }
             throw std::runtime_error("Directory not found");
         }
-        throw std::runtime_error("Incorrect argument provided");
     }
 };
