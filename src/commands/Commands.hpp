@@ -13,6 +13,12 @@ namespace Commands
     public:
         static fs::path changeDirectory(fs::path currentPath, std::string arg);
     };
+
+    class Ls
+    {
+    public:
+        static void listContents(fs::path argPath);
+    };
 };
 
 #endif

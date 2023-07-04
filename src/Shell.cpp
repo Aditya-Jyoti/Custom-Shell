@@ -74,6 +74,20 @@ void Shell::mainLoop()
                 this->updatePrompt();
                 this->resetPrompt();
             }
+            else if (command == "ls")
+            {
+                // TODO: accept path arguments
+
+                inputSplit.erase(inputSplit.begin());
+                if (inputSplit.size() != 0)
+                {
+                    throw std::runtime_error("Too many arguments provided, expected 0 got " + std::to_string(inputSplit.size()));
+                }
+
+                Commands::Ls::listContents(this->currentPath);
+                this->updatePrompt();
+                this->resetPrompt();
+            }
             else
             {
                 throw std::runtime_error("Command '" + command + "' not recognised as an internal command");
