@@ -16,6 +16,8 @@ private:
     std::string prompt;
     std::string input;
 
+    int cursorPosition;
+
     void updatePrompt();
     void resetPrompt();
 

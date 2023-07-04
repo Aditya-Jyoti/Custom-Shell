@@ -1,8 +1,11 @@
 #include "Shell.hpp"
 
 #include "commands/Commands.hpp"
+
+#include "helpers/BetterOutput.hpp"
 #include "helpers/Keycodes.hpp"
 #include "helpers/CommonFunctions.hpp"
+
 #include "utils/Keyboard.hpp"
 
 #include <iostream>
@@ -20,6 +23,8 @@ Shell::Shell()
 
     this->prompt = currentPath.string() + " > ";
     this->input = "";
+
+    this->cursorPosition = 0;
 }
 
 void Shell::updatePrompt()
@@ -32,6 +37,7 @@ void Shell::resetPrompt()
     std::cout << "\n";
     std::cout << this->prompt;
     this->input = "";
+    this->cursorPosition = 0;
 }
 
 void Shell::mainLoop()
@@ -80,13 +86,30 @@ void Shell::mainLoop()
                 continue;
             }
 
-            std::cout << "\b";
-            std::cout << " ";
-            std::cout << "\b";
+            BetterOutput::clearSingleCharacter();
             this->input.pop_back();
         }
+        // else if (keyPressed == Keycodes::LEFT_ARROW)
+        // {
+        //     if (this->cursorPosition == 0)
+        //     {
+        //         continue;
+        //     }
+        //     std::cout << "\x1b[1D";
+        //     this->cursorPosition -= 1;
+        // }
+        // else if (keyPressed == Keycodes::RIGHT_ARROW)
+        // {
+        //     if (this->cursorPosition == this->input.length())
+        //     {
+        //         continue;
+        //     }
+        //     std::cout << "\x1b[5C";
+        //     this->cursorPosition += 1;
+        // }
         else
         {
+            this->cursorPosition += 1;
             this->input += Keycodes::getKeyName(std::to_string(keyPressed));
             std::cout << Keycodes::getKeyName(std::to_string(keyPressed));
         }

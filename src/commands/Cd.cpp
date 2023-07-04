@@ -1,5 +1,7 @@
 #include "Commands.hpp"
 
+#include <direct.h>
+#include <iostream>
 #include <filesystem>
 #include <string>
 
@@ -22,7 +24,7 @@ namespace Commands
                     return currentPath /= file.path();
                 }
             }
-            throw std::runtime_error("Directory not found");
         }
+        throw std::runtime_error("Directory not changed");
     }
 };

@@ -76,6 +76,8 @@ namespace Keycodes
         keymap["32"] = " ";
         keymap["46"] = ".";
         keymap["45"] = "-";
+        keymap["58"] = ":";
+        keymap["59"] = ";";
 
         keymap["27"] = "esc";
         keymap["8"] = "backspace";

@@ -5,15 +5,6 @@
 
 int Keyboard::getKeyPressed()
 {
-    int keyPressed;
-    while (true)
-    {
-        if (_kbhit())
-        {
-            keyPressed = _getch();
-            break;
-        }
-    }
-
+    int keyPressed = _getch();
     return keyPressed;
 }
