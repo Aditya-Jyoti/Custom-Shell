@@ -78,7 +78,7 @@ void Shell::mainLoop()
                 inputSplit.erase(inputSplit.begin());
                 if (inputSplit.size() != 1)
                 {
-                    throw std::runtime_error("Too many arguments provided, expected 1 got " + std::to_string(inputSplit.size()));
+                    throw std::runtime_error("Incorrect number of arguments provided, expected 1 got " + std::to_string(inputSplit.size()));
                 }
 
                 this->currentPath = Commands::Cd::changeDirectory(this->currentPath, inputSplit[0]);
@@ -93,10 +93,36 @@ void Shell::mainLoop()
                 inputSplit.erase(inputSplit.begin());
                 if (inputSplit.size() != 0)
                 {
-                    throw std::runtime_error("Too many arguments provided, expected 0 got " + std::to_string(inputSplit.size()));
+                    throw std::runtime_error("Incorrect number of arguments provided, expected 0 got " + std::to_string(inputSplit.size()));
                 }
 
                 Commands::Ls::listContents(this->currentPath);
+                this->setPrompt();
+                this->updatePrompt();
+                this->resetPrompt();
+            }
+            else if (command == "mkdir")
+            {
+                inputSplit.erase(inputSplit.begin());
+                if (inputSplit.size() != 1)
+                {
+                    throw std::runtime_error("Incorrect number of arguments provided, expected 1 got " + std::to_string(inputSplit.size()));
+                }
+
+                Commands::MkDir::makeDirectory(this->currentPath, inputSplit[0]);
+                this->setPrompt();
+                this->updatePrompt();
+                this->resetPrompt();
+            }
+            else if (command == "rmdir")
+            {
+                inputSplit.erase(inputSplit.begin());
+                if (inputSplit.size() != 1)
+                {
+                    throw std::runtime_error("Incorrect number of arguments provided, expected 1 got " + std::to_string(inputSplit.size()));
+                }
+
+                Commands::RmDir::removeDirectory(this->currentPath, inputSplit[0]);
                 this->setPrompt();
                 this->updatePrompt();
                 this->resetPrompt();

@@ -19,6 +19,16 @@ namespace Commands
     public:
         static void listContents(fs::path argPath);
     };
+    class MkDir
+    {
+    public:
+        static void makeDirectory(fs::path currentPath, std::string dirname);
+    };
+    class RmDir
+    {
+    public:
+        static void removeDirectory(fs::path currentPath, std::string dirname);
+    };
 };
 
 #endif
