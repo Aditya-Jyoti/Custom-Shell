@@ -2,6 +2,9 @@
 
 #include <string>
 #include <vector>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 namespace CommonFunctions
 {
@@ -23,5 +26,16 @@ namespace CommonFunctions
         splitStringVector.push_back(inputString.substr(startPos));
 
         return splitStringVector;
+    }
+
+    int getPathDepth(fs::path &currentPath)
+    {
+        int depth = 0;
+        while (!currentPath.empty())
+        {
+            currentPath = currentPath.parent_path();
+            depth++;
+        }
+        return depth;
     }
 }

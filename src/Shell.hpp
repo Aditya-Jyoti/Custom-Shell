@@ -18,6 +18,7 @@ private:
 
     int cursorPosition;
 
+    void setPrompt();
     void updatePrompt();
     void resetPrompt();
 
@@ -25,7 +26,6 @@ public:
     Shell();
 
     void mainLoop();
-
 };
 
 #endif

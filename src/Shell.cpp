@@ -1,17 +1,21 @@
 #include "Shell.hpp"
 
+#include "colours/Colours.hpp"
+
 #include "commands/Commands.hpp"
 
-#include "helpers/BetterOutput.hpp"
 #include "helpers/Keycodes.hpp"
 #include "helpers/CommonFunctions.hpp"
 
+#include "utils/CleanOutput.hpp"
 #include "utils/Keyboard.hpp"
 
 #include <iostream>
 #include <filesystem>
 #include <string>
 #include <vector>
+
+// TODO: accept nerdfont glyphs
 
 namespace fs = std::filesystem;
 
@@ -21,10 +25,16 @@ Shell::Shell()
 
     this->currentPath = fs::current_path();
 
-    this->prompt = currentPath.string() + " > ";
+    this->setPrompt();
     this->input = "";
 
     this->cursorPosition = 0;
+}
+
+void Shell::setPrompt()
+{
+    // TODO: Truncate path length
+    this->prompt = this->currentPath.string() + " > ";
 }
 
 void Shell::updatePrompt()
@@ -35,14 +45,15 @@ void Shell::updatePrompt()
 void Shell::resetPrompt()
 {
     std::cout << "\n";
-    std::cout << this->prompt;
+    Colours::colouredPrint(this->prompt, Colours::catppuccin.accent);
+
     this->input = "";
     this->cursorPosition = 0;
 }
 
 void Shell::mainLoop()
 {
-    std::cout << this->prompt;
+    Colours::colouredPrint(this->prompt, Colours::catppuccin.accent);
     while (this->isRunning)
     {
         int keyPressed = Keyboard::getKeyPressed();
@@ -71,6 +82,7 @@ void Shell::mainLoop()
                 }
 
                 this->currentPath = Commands::Cd::changeDirectory(this->currentPath, inputSplit[0]);
+                this->setPrompt();
                 this->updatePrompt();
                 this->resetPrompt();
             }
@@ -85,6 +97,7 @@ void Shell::mainLoop()
                 }
 
                 Commands::Ls::listContents(this->currentPath);
+                this->setPrompt();
                 this->updatePrompt();
                 this->resetPrompt();
             }
@@ -100,27 +113,10 @@ void Shell::mainLoop()
                 continue;
             }
 
-            BetterOutput::clearSingleCharacter();
+            CleanOutput::clearSingleCharacter();
+            this->cursorPosition -= 1;
             this->input.pop_back();
         }
-        // else if (keyPressed == Keycodes::LEFT_ARROW)
-        // {
-        //     if (this->cursorPosition == 0)
-        //     {
-        //         continue;
-        //     }
-        //     std::cout << "\x1b[1D";
-        //     this->cursorPosition -= 1;
-        // }
-        // else if (keyPressed == Keycodes::RIGHT_ARROW)
-        // {
-        //     if (this->cursorPosition == this->input.length())
-        //     {
-        //         continue;
-        //     }
-        //     std::cout << "\x1b[5C";
-        //     this->cursorPosition += 1;
-        // }
         else
         {
             this->cursorPosition += 1;

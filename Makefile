@@ -20,12 +20,6 @@ OUTPUT	:= output
 # define source directory
 SRC		:= src
 
-# define include directory
-INCLUDE	:= include
-
-# define lib directory
-LIB		:= lib
-
 MAIN	:= main.exe
 SOURCEDIRS	:= $(SRC)
 INCLUDEDIRS	:= $(INCLUDE) src
