@@ -10,6 +10,7 @@ namespace Commands
 {
     void Ls::listContents(fs::path argPath)
     {
+        std::cout << "\n";
         for (fs::directory_entry file : fs::directory_iterator(argPath))
         {
             if (fs::is_directory(file))
